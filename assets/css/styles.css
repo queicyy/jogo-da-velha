@@ -1,0 +1,67 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: #f0f0f0;
+  padding: 20px;
+}
+
+#game-container {
+  margin: 0 auto;
+  min-width: 300px;
+}
+
+.row {
+  display: flex;
+}
+
+.cell {
+  width: 100px;
+  height: 100px;
+  border: 2px solid #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+  cursor: pointer;
+  background-color: white;
+}
+
+.hidden {
+  display: none;
+}
+
+input {
+  display: block;
+  margin: 10px auto;
+  padding: 5px;
+  width: 80%;
+}
+
+button {
+  margin: 10px auto;
+  padding: 10px;
+  background-color: rgb(13, 121, 13);
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: 0.3s ease-in-out;
+}
+
+button:hover {
+  background-color: rgb(16, 161, 16);
+}
+
+#game-status {
+  margin-top: 20px;
+  font-size: 1.2em;
+}
+
+#ranking {
+  margin-top: 30px;
+}
+
+#ranking-list {
+  list-style-type: none;
+  padding: 0;
+}
