@@ -1,0 +1,33 @@
+
+#ranking {
+    position: absolute;
+    top: 12px;
+    right: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    text-align: left;
+    width: 200px;
+    background-color: rgba(0, 0, 0, 0.483);
+    padding: 12px;
+    max-height: 350px;
+    overflow-y: scroll;
+    border-radius: 4px;
+    color: white;
+}
+
+#ranking::-webkit-scrollbar {
+    width: 8px;  
+}
+#ranking::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.189);    
+}
+#ranking::-webkit-scrollbar-thumb {
+    background-color: black;   
+    border-radius: 20px;      
+}
+
+#ranking > h3 {
+    margin-bottom: 12px;
+}

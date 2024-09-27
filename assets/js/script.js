@@ -8,26 +8,39 @@ const player2Input = document.getElementById("player2");
 const playerInfo = document.getElementById("player-info");
 const rankingList = document.getElementById("ranking-list");
 
+const gameTitle = document.getElementById("game-title");
+const gameForm = document.getElementById("game-form");
+
 let currentPlayer = "O";
 let board = Array(9).fill("");
 let player1 = "";
 let player2 = "";
 let ranking = JSON.parse(localStorage.getItem("ranking")) || [];
 
+// Inicializa independente do status do game
+displayRanking();
+fadeIn();
+
 function initGame() {
+  fadeIn();
+
+  cells.forEach((cell) => {
+    cell.style.backgroundColor = "transparent";
+  });
+
+  playerInfo.classList.add("hidden");
+
   player1 = player1Input.value || "Jogador 1";
   player2 = player2Input.value || "Jogador 2";
   currentPlayer = "O";
   board.fill("");
   cells.forEach((cell) => {
     cell.textContent = "";
-    cell.style.backgroundColor = "white";
     cell.addEventListener("click", handleCellClick, { once: true });
   });
   gameStatus.textContent = `${player1} (O) começa!`;
   gameStatus.classList.remove("hidden");
   gameBoard.classList.remove("hidden");
-  playerInfo.classList.remove("hidden");
   startButton.classList.remove("hidden");
   saveGameState();
   updateRanking();
@@ -81,7 +94,9 @@ function checkWinner() {
 
 function endGame(message) {
   gameStatus.textContent = message;
-  cells.forEach((cell) => cell.removeEventListener("click", handleCellClick));
+  cells.forEach((cell) => {
+    cell.removeEventListener("click", handleCellClick);
+  });
   updateRankingAfterGame();
   restartButton.classList.remove("hidden");
   localStorage.removeItem("board");
@@ -91,7 +106,7 @@ function endGame(message) {
 }
 
 function updateRankingAfterGame() {
-  const winner = currentPlayer === "0" ? player1 : player2;
+  const winner = currentPlayer === "O" ? player1 : player2;
 
   if (gameStatus.textContent.includes("Empate")) {
     updatePlayerScore(player1);
@@ -118,14 +133,15 @@ function updatePlayerScore(player) {
 
 function displayRanking() {
   rankingList.innerHTML = "";
-  ranking.forEach((entry) => {
-    const listItem = document.createElement("li");
-    listItem.textContent = `${entry.name}: ${entry.wins} vitória(s)`;
-    rankingList.appendChild(listItem);
-  });
-}
 
-function updateRanking() {}
+  ranking
+    .sort((a, b) => b.wins - a.wins)
+    .forEach((entry) => {
+      const listItem = document.createElement("li");
+      listItem.textContent = `${entry.name}: ${entry.wins} vitória(s)`;
+      rankingList.appendChild(listItem);
+    });
+}
 
 function saveGameState() {
   localStorage.setItem("board", JSON.stringify(board));
@@ -134,4 +150,59 @@ function saveGameState() {
   localStorage.setItem("player2", player2);
 }
 
-startButton.addEventListener("click", initGame);
+// updated - feat/layout - START ==================
+function fadeIn() {
+  gameTitle.classList.remove("fadeIn");
+  playerInfo.classList.remove("fadeIn");
+  gameStatus.classList.remove("fadeIn");
+
+  setTimeout(() => {
+    gameTitle.classList.add("fadeIn");
+    playerInfo.classList.add("fadeIn");
+    gameStatus.classList.add("fadeIn");
+  }, 1);
+}
+// updated - feat/layout END ==================
+
+function loadGameState() {
+  const saveBoard = JSON.parse(localStorage.getItem("board"));
+  if (saveBoard) {
+    board = saveBoard;
+    currentPlayer = localStorage.getItem("currentPlayer");
+    player1 = localStorage.getItem("player1");
+    player2 = localStorage.getItem("player2");
+    gameBoard.classList.remove("hidden");
+    playerInfo.classList.add("hidden");
+    startButton.classList.add("hidden");
+    cells.forEach((cell, index) => {
+      cell.textContent = board[index];
+      cell.style.backgroundColor = board[index] === "O" && "green";
+      cell.style.backgroundColor = board[index] === "X" && "red";
+      if (!board[index]) {
+        cell.addEventListener("click", handleCellClick, { once: true });
+      }
+    });
+    gameStatus.textContent = `${
+      currentPlayer === "O" ? player1 : player2
+    } (${currentPlayer}) é a sua vez!`;
+    gameStatus.classList.remove("hidden");
+  }
+}
+
+function restartGame() {
+  restartButton.classList.add("hidden");
+
+  gameBoard.classList.add("hidden");
+  playerInfo.classList.remove("hidden");
+  startButton.classList.remove("hidden");
+}
+
+gameForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  initGame();
+});
+restartButton.addEventListener("click", restartGame);
+
+window.addEventListener("load", () => {
+  loadGameState();
+});

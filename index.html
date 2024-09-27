@@ -5,17 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Jogo da Velha</title>
     <link rel="stylesheet" href="./assets/css/styles.css" />
+    <link rel="stylesheet" href="./assets/css/gameboard.css" />
+    <link rel="stylesheet" href="./assets/css/ranking.css" />
+    <link rel="stylesheet" href="./assets/css/player-info.css" />
+    <link rel="stylesheet" href="./assets/css/fade-in.css" />
   </head>
   <body>
-    <h1>Jogo da Velha</h1>
+    <h1 id="game-title">Jogo da Velha</h1>
     <div id="game-container">
       <div id="player-info">
-        <label for="player1">Jogador 1 (Verde - O):</label>
-        <input type="text" id="player1" placeholder="Nome do jogador 1" />
-        <label for="player2">Jogador 2 (Vermelho - X):</label>
-        <input type="text" id="player2" placeholder="Nome do jogador 2" />
-        <button id="start-game">Iniciar Jogo</button>
+        <form id="game-form">
+          <label for="player1">Jogador 1 (Verde - O):</label>
+          <input required type="text" id="player1" placeholder="Nome do jogador 1" />
+          <label for="player2">Jogador 2 (Vermelho - X):</label>
+          <input required type="text" id="player2" placeholder="Nome do jogador 2" />
+          <button type="submit" id="start-game">Iniciar Jogo</button>
+        </form>
       </div>
+
       <div id="game-board" class="hidden">
         <div class="row">
           <div class="cell" data-index="0"></div>
