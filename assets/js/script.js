@@ -30,8 +30,8 @@ function initGame() {
 
   playerInfo.classList.add("hidden");
 
-  player1 = player1Input.value || "Jogador 1";
-  player2 = player2Input.value || "Jogador 2";
+  player1 = player1Input.value;
+  player2 = player2Input.value;
   currentPlayer = "O";
   board.fill("");
   cells.forEach((cell) => {
@@ -41,9 +41,7 @@ function initGame() {
   gameStatus.textContent = `${player1} (O) começa!`;
   gameStatus.classList.remove("hidden");
   gameBoard.classList.remove("hidden");
-  startButton.classList.remove("hidden");
   saveGameState();
-  updateRanking();
 }
 
 function handleCellClick(event) {
@@ -195,6 +193,7 @@ function restartGame() {
   gameBoard.classList.add("hidden");
   playerInfo.classList.remove("hidden");
   startButton.classList.remove("hidden");
+  gameStatus.classList.add("hidden");
 }
 
 gameForm.addEventListener("submit", (e) => {
